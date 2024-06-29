@@ -11,9 +11,6 @@ from .serializers import UserSerializer, ActiveUserSerializer, CompanySerializer
 from .models import MyUpload, Company
 from django.contrib.auth.models import User
 
-from rest_framework.exceptions import ValidationError
-from django.core.exceptions import FieldError
-
 import csv
 import hashlib
 
@@ -77,31 +74,41 @@ class MyChunkedUploadCompleteView(ChunkedUploadCompleteView):
     def on_completion(self, uploaded_file, request):
         print('uploaded_file', uploaded_file)
         csv_data = uploaded_file.read().decode('utf-8').splitlines()
-        csv_reader = csv.reader(csv_data)
-
-        # Skip header if exists
-        next(csv_reader, None)
-
-        # Save CSV data to the database
-        for row in csv_reader:
-            # name, age = row
-            # print(name,age)
-            print(row)
-            
-            Company.objects.create(
-                company_id=row[0],
-                name=row[1],
-                domain=row[2],
-                year_founded=row[3],
-                industry=row[4],
-                size_range=row[5],
-                locality=row[5],
-                country=row[6],
-                linkedin_url=row[7],
-                current_employees_estimate=row[8],
-                total_employees_estimate=row[10]
-            )
+        csv_reader = csv.reader(csv_data)        
         
+        for row in csv_reader:
+            print(row)
+    
+            # Skip the row if it is empty or contains only null values
+            if not row or all(value == '' or value is None for value in row):
+                print(f"Skipping empty or null row: {row}")
+                continue
+        
+            try:
+                # Ensure the row has the expected number of columns
+                if len(row) < 11:
+                    print(f"Skipping row with insufficient columns: {row}")
+                    continue
+            
+                # Replace any missing values in the row with None
+                row = [(None if value == '' or value is None else value) for value in row]
+            
+            
+                Company.objects.create(
+                    company_id=row[0],
+                    name=row[1],
+                    domain=row[2],
+                    year_founded=row[3],
+                    industry=row[4],
+                    size_range=row[5],
+                    locality=row[6], 
+                    country=row[7],  
+                    linkedin_url=row[8],
+                    current_employees_estimate=row[9],
+                    total_employees_estimate=row[10]
+                )
+            except Exception as e:
+                print(f"Error creating company for row {row}: {e}")
         
         
     def get_response_data(self, chunked_upload, request):
@@ -130,12 +137,7 @@ class CompanyList(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        valid_fields = [field.name for field in Company._meta.get_fields()]
-        try:
-            for param, value in self.request.query_params.items():
-                if value:
-                    if param not in valid_fields:
-                        raise ValidationError({param: "Invalid filter field."})
-                    queryset = queryset.filter(**{param: value})
-        except FieldError:
-            raise ValidationError({"detail": "Invalid filter parameter."})
+        for param, value in self.request.query_params.items():
+            if value:
+                queryset = queryset.filter(**{param: value})
+        return queryset
