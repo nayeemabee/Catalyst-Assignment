@@ -14,6 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'password', 'email')
 
 
+class ActiveUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'is_active']
+
+
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:

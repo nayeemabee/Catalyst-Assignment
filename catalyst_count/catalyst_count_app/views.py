@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from chunked_upload.views import ChunkedUploadView, ChunkedUploadCompleteView
 
-from .serializers import UserSerializer, CompanySerializer
+from .serializers import UserSerializer, ActiveUserSerializer, CompanySerializer
 from .models import MyUpload, Company
+from django.contrib.auth.models import User
 
 from rest_framework.exceptions import ValidationError
 from django.core.exceptions import FieldError
@@ -41,6 +43,21 @@ class UserLoginAPIView(generics.CreateAPIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
         
+class UserLogoutAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        Token.objects.filter(user=user).delete()
+        return Response({'message': 'Successfully logged out'}, status=200)
+    
+    
+class ActiveUserListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ActiveUserSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(is_active=True)    
 
 
 class MyChunkedUploadView(ChunkedUploadView):
