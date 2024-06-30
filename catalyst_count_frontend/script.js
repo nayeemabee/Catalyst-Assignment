@@ -9,7 +9,7 @@ const companies = 'http://localhost:8000/api/companies/';
 // function to get active users
 async function fetchUsers(token) {
     try {
-        const response = await fetch(users, {
+        const response = await fetch('http://localhost:8000/api/active-users/', {
             method: 'GET',
             headers: {
                 'Authorization': 'Token ' + token,
@@ -22,7 +22,6 @@ async function fetchUsers(token) {
         }
 
         const users = await response.json();
-        console.log(users)
 
         const userTable = document.getElementById('userTable');
 
@@ -40,6 +39,15 @@ async function fetchUsers(token) {
         console.error('There has been a problem with your fetch operation:', error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        fetchUsers(token);
+    } else {
+        console.error('No token found in localStorage');
+    }
+});
 
 // Function to login user
 document.addEventListener("DOMContentLoaded", function () {
@@ -73,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         localStorage.setItem("loggedIn", true);
                         console.log(localStorage.getItem('token'));
                         window.location.href = 'home.html';
-                        document.addEventListener('DOMContentLoaded', fetchUsers(localStorage.getItem('token')));
+                        
                     } else {
                         alert('Invalid credentials');
                     }

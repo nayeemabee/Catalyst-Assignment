@@ -32,8 +32,75 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-
+    <div class="container">
+        <h3 class="my-5">Query Builder</h3>
+        <form id="query-form" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="keyword">Keyword</label>
+                        <input type="text" class="form-control" id="keyword" placeholder="Enter keyword">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="industry">Industry</label>
+                        <select class="form-control" id="industry">
+                            <option value="">Select industry</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="year-founded">Year Founded</label>
+                        <select class="form-control" id="year-founded">
+                            <option value="">Select year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" placeholder="Enter city">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" id="state" placeholder="Enter state">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select class="form-control" id="country">
+                            <option value="">Select country</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="employees-from">Employees From</label>
+                        <input type="number" class="form-control" id="employees-from"
+                            placeholder="Enter minimum employees">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="employees-to">Employees To</label>
+                        <input type="number" class="form-control" id="employees-to"
+                            placeholder="Enter maximum employees">
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary mr-2">Query Data</button>
+                    <button type="button" id="reset-button" class="btn btn-secondary">Reset</button>
+                </div>
+            </div>
+        </form>
+        <div id="results" class="mt-4">
+            <!-- Results will be displayed here -->
+        </div>
     </div>
 
 

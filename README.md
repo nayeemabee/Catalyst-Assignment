@@ -37,15 +37,22 @@ Catalyst Count is a Django-based application designed to handle user registratio
 ## API Endpoints
 
 ### Authentication
-- *Register*: /auth/registration/
-- *Login*: /auth/login/
-- *Logout*: /auth/logout/
+- *Register*: /api/user/register/
+- *Login*: /api/user/login/
+- *Logout*: /api/user/logout/
+
+### Accunts
+- *Auth Accounts*: /accounts/
 
 ### Chunked Upload
-- *Upload*: /chunked_upload/
+- *Upload*: /api/upload/
+- *Upload-Complete*: /api/upload-complete/
 
 ### Catalyst Count
-- *Query Data*: /api/catalyst_count/
+- *Query Data*: /api/companies/
+
+### Users
+- *Users*: /api/active-users/
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
