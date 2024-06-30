@@ -54,12 +54,6 @@ Catalyst Count is a Django-based application designed to handle user registratio
 ### Users
 - *Users*: /api/active-users/
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 ## Acknowledgements
 - [Django](https://www.djangoproject.com/)
 - [Django Rest Framework](https://www.django-rest-framework.org/)
