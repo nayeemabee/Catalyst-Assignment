@@ -132,12 +132,16 @@ def calculate_md5(request):
         
 
 class CompanyList(generics.ListAPIView):
-    queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Company.objects.all()
         for param, value in self.request.query_params.items():
             if value:
                 queryset = queryset.filter(**{param: value})
         return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        count = queryset.count()
+        return Response({'count': count})
