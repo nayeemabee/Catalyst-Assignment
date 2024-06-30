@@ -1,6 +1,6 @@
 # Catalyst Count
 
-Catalyst Count is a Django-based application designed to handle user registration, login, and the chunked upload of files. The application uses Django Rest Framework, django-allauth for authentication, and django-chunked-upload for handling large file uploads. The uploaded data is saved in the CatalystCount model, and the application provides APIs to query this data.
+Catalyst Count is a Django-based application designed to handle user registration, login, and the chunked upload of files. The application uses Django Rest Framework, django-allauth for authentication, and django-chunked-upload for handling large file uploads. The uploaded data is saved in the Company database, and the application provides APIs to query this data.
 
 ## Features
 
@@ -10,10 +10,10 @@ Catalyst Count is a Django-based application designed to handle user registratio
 
 2. *Chunked File Upload*
    - Handle large file uploads using django-chunked-upload.
-   - Save uploaded data into the CatalystCount model.
+   - Save uploaded data into the Company database.
 
 3. *Data Querying*
-   - APIs to query data in the CatalystCount model.
+   - APIs to query data in the Company and User database.
 
 ## Installation
 
@@ -29,10 +29,10 @@ Catalyst Count is a Django-based application designed to handle user registratio
 - Use the endpoints provided by django-allauth to register and log in users.
 
 ### Chunked File Upload
-- Use the chunked upload endpoint to upload large files. The data will be saved in the CatalystCount model.
+- Use the chunked upload endpoint to upload large files. The data will be saved in the Company database.
 
 ### Query Data
-- Use the provided API endpoints to query data in the CatalystCount model.
+- Use the provided API endpoints to query data in the Company database.
 
 ## API Endpoints
 
